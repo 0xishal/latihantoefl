@@ -194,6 +194,18 @@ V.rangkuman=()=>`<h1>Rangkuman Kilat</h1><p class="muted">Satu halaman untuk diu
 <div><h4>Discussion</h4><ul class="clean small"><li>I see both sides, but I agree with X that…</li><li>The main reason is that…</li><li>For instance, in my experience…</li><li>While Y makes a fair point about…, …</li><li>As a result, …</li><li>Therefore, I believe…</li></ul></div>
 <div><h4>Interview</h4><ul class="clean small"><li>Personally, I prefer… mainly because…</li><li>Let me give you an example.</li><li>A good example of this is when…</li><li>That's why I think…</li><li>On the other hand, …</li><li>Overall, …</li></ul></div></div></div>`;
 
+let tsec='all';
+V.tips=()=>{const secs=[['all','Semua'],['R','Reading'],['L','Listening'],['W','Writing'],['S','Speaking']];const names={R:'Reading',L:'Listening',W:'Writing',S:'Speaking'};
+ const list=TIPS.filter(t=>tsec==='all'||t.sec===tsec);
+ return `<div class="page-head"><div><h1>Tips &amp; Trik Menjawab</h1><p class="muted">Strategi praktis untuk ke-12 tipe soal TOEFL iBT 2026: cara kerja, trik cepat, jebakan yang harus dihindari, dan latihan harian.</p></div></div>
+ <div class="grid g3" style="margin-bottom:18px">${TIPS_GENERAL.map(g=>`<div class="stat"><div class="ico"><i data-lucide="${g[0]}"></i></div><h4>${g[1]}</h4><span>${g[2]}</span></div>`).join('')}</div>
+ <div class="tabs">${secs.map(s=>`<button class="${tsec===s[0]?'on':''}" data-act="tsec" data-s="${s[0]}">${s[1]}</button>`).join('')}</div>
+ ${list.map(t=>`<div class="task sec-${t.sec}"><div class="flex" style="justify-content:space-between"><div><span class="tag">${names[t.sec].toUpperCase()}</span><h3 style="margin:8px 0 2px">${t.name}</h3></div><span class="pill" style="background:color-mix(in srgb,var(--c) 12%,transparent);color:var(--c)"><i data-lucide="clock"></i>${t.time}</span></div>
+ <p class="muted" style="margin:.4em 0 .8em">${t.how}</p>
+ <div class="grid g2" style="gap:14px"><div><h4 class="flex" style="gap:6px;color:var(--c)"><i data-lucide="zap"></i>Trik cepat</h4><ol style="margin:0;padding-left:1.2em">${t.tricks.map(x=>`<li>${x}</li>`).join('')}</ol></div>
+ <div><h4 class="flex" style="gap:6px;color:var(--bad)"><i data-lucide="alert-triangle"></i>Jebakan</h4><ul class="clean">${t.traps.map(x=>`<li>${x}</li>`).join('')}</ul>
+ <div class="tip" style="margin-top:12px"><b class="flex" style="gap:6px"><i data-lucide="dumbbell"></i>Latihan harian</b>${t.drill}</div></div></div></div>`).join('')}
+ <div class="card"><h3><i data-lucide="target"></i>Langsung praktikkan</h3><div class="flex"><a class="btn" href="#latihan"><i data-lucide="target"></i>Drill per tipe soal</a><a class="btn ghost" href="#tryout"><i data-lucide="flag"></i>Kerjakan tryout</a></div></div>`};
 V.reading=()=>`<div class="secHead sec-R"><span class="tag sec-R">READING · ±30 menit · adaptif</span><h1>Reading</h1><p class="muted">Modul 1 sama untuk semua peserta; performa kamu menentukan modul 2 (lebih sulit atau lebih mudah). Kerjakan modul 1 dengan teliti!</p></div>
 <div class="task sec-R"><h3>1. Complete the Words</h3><p>Paragraf akademik pendek; pada beberapa kata, <b>separuh huruf terakhir dihapus</b>. Tugasmu: lengkapi hurufnya. Menguji kosakata, grammar, dan ejaan sekaligus.</p>
 <p class="small muted">Contoh (coba isi lalu tekan Periksa):</p><div id="rdEx">${ctw('rx','Volcanoes form where molten rock {rea|ches} the surface of the Earth. When pressure {bui|lds} up underground, an {erup|tion} can occur.','')}<button class="btn sm" data-act="check" data-scope="#rdEx">Periksa</button></div>
@@ -281,16 +293,19 @@ V.grammar=()=>`<h1>Grammar Inti</h1><p class="muted">12 topik yang paling berdam
 ${GRAMMAR.map((g,i)=>`<details ${i===0?'open':''}><summary>${g.t}</summary>${g.b}</details>`).join('')}
 <h2 style="margin-top:26px">📝 Kuis Grammar (20 soal)</h2><div id="gq">${GQUIZ.map((q,i)=>mcq('gq'+i,q,i+1,'')).join('')}<div class="flex"><button class="btn" data-act="check" data-scope="#gq" data-save="gram">Periksa jawaban</button><button class="btn ghost" data-act="rerender">Ulangi</button></div></div>`;
 
-let vfilter='all',vmode='cards';
-V.kosakata=()=>{const known=ST.get('known',{});const list=VOCAB.map((v,i)=>[v,i]).filter(([v])=>vfilter==='all'||!known[v[0]]);
- return `<h1>Kosakata Akademik</h1><p class="muted">${VOCAB.length} kata inti dari Academic Word List &amp; konteks kampus. Klik kartu untuk membalik, 🔊 untuk mendengar, ✓ untuk menandai hafal.</p>
+let vfilter='all',vmode='cards',vcat='semua';
+V.kosakata=()=>{const known=ST.get('known',{});const inCat=v=>vcat==='semua'||v[4]===vcat;const list=VOCAB.map((v,i)=>[v,i]).filter(([v])=>inCat(v)&&(vfilter==='all'||!known[v[0]]));
+ const cnt=c=>VOCAB.filter(v=>c==='semua'||v[4]===c).length,kn=c=>VOCAB.filter(v=>(c==='semua'||v[4]===c)&&known[v[0]]).length;
+ const cats=[['semua','Semua','layers'],['akademik','Akademik','book-open'],['kampus','Kehidupan Kampus','flag'],['sains','Sains & Alam','sparkles']];
+ return `<div class="page-head"><div><h1>Kosakata Akademik</h1><p class="muted">${VOCAB.length} kata dari Academic Word List, kehidupan kampus, dan sains. Klik kartu untuk membalik, 🔊 untuk mendengar, tandai yang sudah hafal.</p></div></div>
+ <div class="grid g4" style="margin-bottom:16px">${cats.map(c=>`<button class="stat" data-act="vcat" data-c="${c[0]}" style="text-align:left;cursor:pointer;font:inherit;color:inherit;${vcat===c[0]?'border-color:var(--pri);box-shadow:0 0 0 3px var(--pri-soft)':''}"><div class="ico"><i data-lucide="${c[2]}"></i></div><b style="font-size:1.25rem">${c[1]}</b><span>${kn(c[0])}/${cnt(c[0])} hafal</span><div class="bar"><i style="width:${kn(c[0])/cnt(c[0])*100}%"></i></div></button>`).join('')}</div>
  <div class="tabs"><button class="${vmode==='cards'?'on':''}" data-act="vmode" data-m="cards">🃏 Flashcard</button><button class="${vmode==='quiz'?'on':''}" data-act="vmode" data-m="quiz">❓ Kuis 10 soal</button><button class="${vmode==='list'?'on':''}" data-act="vmode" data-m="list">📄 Daftar</button>
  ${vmode==='cards'?`<span style="width:16px"></span><button class="${vfilter==='all'?'on':''}" data-act="vfilter" data-f="all">Semua</button><button class="${vfilter==='todo'?'on':''}" data-act="vfilter" data-f="todo">Belum hafal</button>`:''}</div>
  ${vmode==='cards'?`<div class="grid g4">${list.map(([v,i])=>`<div><div class="fc ${known[v[0]]?'known':''}" data-act="flip"><div class="fc-in"><div class="fc-f"><span class="small muted">#${i+1} · ${v[1]}</span><b>${v[0]}</b><span class="small muted">klik untuk balik</span></div><div class="fc-b"><b style="font-size:1.05rem">${v[2]}</b><p style="margin:.5em 0 0;opacity:.9"><i>${v[3]}</i></p></div></div></div><div class="fc-tools"><button class="linkish" data-act="say" data-t="${v[0]}. ${v[3].replace(/"/g,'')}">🔊 dengar</button><button class="linkish" data-act="known" data-w="${v[0]}">${known[v[0]]?'✓ hafal':'tandai hafal'}</button></div></div>`).join('')||'<p>🎉 Semua kata sudah ditandai hafal!</p>'}</div>`:''}
  ${vmode==='quiz'?vocabQuiz():''}
- ${vmode==='list'?`<div class="card tbl"><table><tr><th>#</th><th>Kata</th><th>Kelas</th><th>Arti</th><th>Contoh</th></tr>${VOCAB.map((v,i)=>`<tr><td>${i+1}</td><td><b>${v[0]}</b></td><td>${v[1]}</td><td>${v[2]}</td><td><i>${v[3]}</i></td></tr>`).join('')}</table></div>`:''}
- <div class="tip">💡 Target 3 bulan: kuasai 60 kata inti ini di minggu 1–3, lalu tambah ±15 kata/hari dari <a href="https://www.eapfoundation.com/vocab/academic/awllists/" target="_blank">Academic Word List</a> (570 keluarga kata).</div>`};
-function vocabQuiz(){const pick=[...VOCAB].sort(()=>Math.random()-.5).slice(0,10);const seed=Math.random().toString(36).slice(2,6);
+ ${vmode==='list'?`<div class="card tbl"><table><tr><th>#</th><th>Kata</th><th>Kelas</th><th>Arti</th><th>Contoh</th></tr>${VOCAB.map((v,i)=>[v,i]).filter(([v])=>inCat(v)).map(([v,i])=>`<tr><td>${i+1}</td><td><b>${v[0]}</b></td><td>${v[1]}</td><td>${v[2]}</td><td><i>${v[3]}</i></td></tr>`).join('')}</table></div>`:''}
+ <div class="tip">💡 Target 3 bulan: kuasai ${VOCAB.length} kata di website ini dalam 6 minggu pertama (±25 kata/minggu), lalu tambah ±15 kata/hari dari <a href="https://www.eapfoundation.com/vocab/academic/awllists/" target="_blank">Academic Word List</a> (570 keluarga kata).</div>`};
+function vocabQuiz(){const pool=VOCAB.filter(v=>vcat==='semua'||v[4]===vcat);const pick=[...pool].sort(()=>Math.random()-.5).slice(0,10);const seed=Math.random().toString(36).slice(2,6);
  return `<div id="vq">${pick.map((v,i)=>{const others=VOCAB.filter(x=>x!==v).sort(()=>Math.random()-.5).slice(0,3).map(x=>x[2]);return mcq('vq'+seed+i,{q:`Arti kata <b>${v[0]}</b> (${v[1]})?`,o:[v[2],...others],e:`<i>${v[3]}</i>`},i+1,'')}).join('')}<div class="flex"><button class="btn" data-act="check" data-scope="#vq">Periksa</button><button class="btn ghost" data-act="rerender">Kuis baru</button></div></div>`}
 
 let dtab='ctw';
@@ -308,9 +323,9 @@ V.latihan=()=>{const tabs=[['ctw','Complete the Words'],['dl','Read in Daily Lif
 /* ---------- Tryout ---------- */
 let TO=null; // {i, start}
 V.tryout=()=>{if(TO)return tryoutView(TO.i);const hist=ST.get('hist',[]);
- return `<div class="page-head"><div><h1>Tryout</h1><p class="muted">3 paket lengkap 4 section mengikuti format 2026. Reading, Listening &amp; Build a Sentence dinilai otomatis; Email, Discussion &amp; Speaking dinilai sendiri dengan rubrik. Hasilnya <b>estimasi</b> band — bukan skor resmi ETS.</p></div></div>
+ return `<div class="page-head"><div><h1>Tryout</h1><p class="muted">${TRY.length} paket lengkap 4 section mengikuti format 2026. Reading, Listening &amp; Build a Sentence dinilai otomatis; Email, Discussion &amp; Speaking dinilai sendiri dengan rubrik. Hasilnya <b>estimasi</b> band — bukan skor resmi ETS.</p></div></div>
  <div class="grid g3">${TRY.map((t,i)=>{const h=hist.filter(x=>x.n===t.name.split(' —')[0]);const best=h.length?Math.max(...h.map(x=>x.o)):null;const [nm,sub]=t.name.split(' — ');
- return `<div class="card try-card"><span class="num">${i+1}</span><span class="pill"><i data-lucide="calendar"></i>Minggu ${[1,6,10][i]}</span><h3 style="margin-top:12px">${nm}</h3><p class="muted small" style="margin-top:-6px">${sub}</p>
+ return `<div class="card try-card"><span class="num">${i+1}</span><span class="pill"><i data-lucide="calendar"></i>Minggu ${[1,6,8,10,11][i]||12}</span><h3 style="margin-top:12px">${nm}</h3><p class="muted small" style="margin-top:-6px">${sub}</p>
  <div class="flex small muted" style="gap:14px;margin:10px 0 14px"><span class="flex" style="gap:5px"><i data-lucide="clock"></i>±75 menit</span><span class="flex" style="gap:5px"><i data-lucide="layers"></i>4 section</span></div>
  ${best!==null?`<div class="note small" style="margin:0 0 14px"><b>Skor terbaik: ${best.toFixed(1)}</b> · ≈${CONC[best]}/120 · ${h.length}× dikerjakan</div>`:''}
  <button class="btn" data-act="start" data-i="${i}" style="width:100%;justify-content:center"><i data-lucide="${best!==null?'rotate-ccw':'play'}"></i>${best!==null?'Kerjakan lagi':'Mulai tryout'}</button></div>`}).join('')}</div>
@@ -353,8 +368,8 @@ function gradeTryout(){const scope=$('#tryout');if(scope.classList.contains('rev
  <div class="band sec-S"><span class="small">Speaking</span><b>${bS.toFixed(1)}</b><span class="small muted">diri ${self.S[0]}/${self.S[1]}</span></div>
  <div class="band total"><span class="small">TOTAL</span><b>${o.toFixed(1)}</b><span class="small">≈ ${CONC[o]} /120 · ${CEFR(o)}</span></div></div>
  <p>${o>=4?'🎉 <b>Estimasi sudah mencapai target 4.0!</b> Pertahankan dan perkuat konsistensi.':`Target 4.0 masih <b>${(4-o).toFixed(1)}</b> band lagi.`} Section terlemah: <b>${weak[0]}</b> — prioritaskan di minggu-minggu berikutnya.</p>${miss}
- <p class="small muted">Gulir ke bawah untuk melihat pembahasan, transkrip, dan contoh jawaban. Estimasi ini bersifat perkiraan, bukan skor resmi ETS.</p></div>`;
- window.scrollTo({top:0,behavior:'smooth'});clearInterval(TIMERS.tt);markActive();if(o>=4)confetti()}
+ <div class="flex" style="margin:6px 0 10px"><button class="btn sm" data-act="backList"><i data-lucide="arrow-right"></i>Kembali ke daftar tryout</button><a class="btn sm ghost" href="#beranda">Lihat riwayat di Beranda</a></div><p class="small muted">Gulir ke bawah untuk melihat pembahasan, transkrip, dan contoh jawaban. Estimasi ini bersifat perkiraan, bukan skor resmi ETS.</p></div>`;
+ icons($('#toResult'));window.scrollTo({top:0,behavior:'smooth'});clearInterval(TIMERS.tt);markActive();if(o>=4)confetti()}
 
 V.sumber=()=>`<h1>Sumber Belajar</h1><p class="muted">Materi website ini disusun dari informasi resmi ETS dan panduan persiapan TOEFL 2026, ditambah sumber belajar gratis berikut.</p>
 <div class="grid g2">
@@ -406,7 +421,7 @@ let PAL=[],palSel=0;
 function palItems(q){q=q.trim().toLowerCase();const pages=NAV.filter(n=>n[0]!=='grp').map(n=>({ic:n[1],t:n[2],k:'Halaman',href:'#'+n[0]}));
  const gram=GRAMMAR.map(g=>({ic:'puzzle',t:g.t.replace(/^\d+\.\s*/,''),k:'Grammar',href:'#grammar'}));
  const voc=VOCAB.map(v=>({ic:'languages',t:v[0],s:`${v[1]} · ${v[2]}`,k:'Kosakata',href:'#kosakata'}));
- const tasks=['Complete the Words','Read in Daily Life','Academic Passage','Choose a Response','Conversation','Announcement','Academic Talk','Build a Sentence','Write an Email','Academic Discussion','Listen and Repeat','Take an Interview'].map((t,i)=>({ic:'file-text',t,k:'Tipe soal',href:'#'+(i<3?'reading':i<7?'listening':i<10?'writing':'speaking')}));
+ const tasks=['Complete the Words','Read in Daily Life','Academic Passage','Choose a Response','Conversation','Announcement','Academic Talk','Build a Sentence','Write an Email','Academic Discussion','Listen and Repeat','Take an Interview'].map((t,i)=>({ic:'lightbulb',t,s:'Tips & trik menjawab',k:'Tipe soal',href:'#tips'}));
  const all=[...pages,...tasks,...gram,...voc];if(!q)return [...pages,...tasks.slice(0,4)];
  return all.filter(x=>(x.t+' '+(x.s||'')).toLowerCase().includes(q)).slice(0,30)}
 function palDraw(){const q=$('#palInput').value;PAL=palItems(q);palSel=Math.min(palSel,Math.max(PAL.length-1,0));
@@ -454,8 +469,8 @@ const ACT={
   const [n,inf,col,par]=MMINFO[+i];p.innerHTML=`<span class="pill" style="background:${col}22;color:${col}">${par}</span><h3 style="margin-top:10px;color:${col}">${n}</h3><p>${inf}</p>`;p.style.animation='none';void p.offsetWidth;p.style.animation='fadeUp .3s'},
  flip(t){t.classList.toggle('flip')},
  known(t){const k=ST.get('known',{});k[t.dataset.w]=!k[t.dataset.w];ST.set('known',k);if(k[t.dataset.w])markActive();if(vfilter==='todo'&&k[t.dataset.w]){render();return}t.textContent=k[t.dataset.w]?'✓ hafal':'tandai hafal';t.closest('div').previousElementSibling.classList.toggle('known',k[t.dataset.w])},
- vmode(t){vmode=t.dataset.m;render()},vfilter(t){vfilter=t.dataset.f;render()},
- dtab(t){dtab=t.dataset.t;render()},
+ vmode(t){vmode=t.dataset.m;render()},vcat(t){vcat=t.dataset.c;render()},vfilter(t){vfilter=t.dataset.f;render()},
+ dtab(t){dtab=t.dataset.t;render()},tsec(t){tsec=t.dataset.s;render()},backList(){TO=null;render();window.scrollTo(0,0)},
  start(t){TO={i:+t.dataset.i,start:Date.now()};PLAYS={};markActive();if(location.hash!=='#tryout')location.hash='tryout';else render();window.scrollTo(0,0)},
  submit(){const sc=$('#tryout');if(sc&&sc.classList.contains('reviewed')){toast('Tryout ini sudah dinilai.');return}const [d,n]=updateTryProg()||[0,0];
   confirmBox(`<h3><i data-lucide="flag"></i>Selesai &amp; nilai sekarang?</h3><p class="muted">Kamu sudah mengisi <b>${d} dari ${n}</b> bagian. ${d<n?'Bagian yang kosong akan dihitung salah/0.':'Semua bagian sudah terisi. 👍'}</p>`,'Ya, nilai',gradeTryout)},
@@ -471,6 +486,7 @@ const ACT={
  focusToggle(){if(FT.run){clearInterval(FT.h);FT.run=false}else{if(FT.left<=0)FT.left=FT.len;FT.run=true;FT.h=setInterval(ftTick,1000)}ftDraw()},
  focusReset(){clearInterval(FT.h);FT.run=false;FT.left=FT.len;ftDraw()}
 };
+document.addEventListener('click',e=>{const l=e.target.closest('a[href="#tryout"]');if(l&&TO&&location.hash==='#tryout'&&$('#tryout.reviewed')){e.preventDefault();TO=null;render();return}});
 document.addEventListener('click',e=>{const t=e.target.closest('[data-act]');if(!t)return;const f=ACT[t.dataset.act];if(f){if(t.tagName==='A'||t.tagName==='BUTTON')e.preventDefault();f(t,e)}});
 document.addEventListener('input',e=>{if(e.target.id&&e.target.id.startsWith('ta-')){const k=e.target.id.slice(3);const w=e.target.value.trim().split(/\s+/).filter(Boolean).length;const el=$('#wc-'+k);if(el)el.textContent=w+' kata'}if(e.target.closest&&e.target.closest('#tryout'))updateTryProg()});
 document.addEventListener('change',e=>{if(e.target.closest&&e.target.closest('#tryout'))updateTryProg()});

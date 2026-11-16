@@ -8,9 +8,10 @@ Website belajar mandiri untuk persiapan **TOEFL iBT format baru (mulai 21 Januar
 - **Rencana 12 minggu**: 4 fase (Fondasi → Penguatan → Simulasi → Hari H) dengan checklist mingguan.
 - **Mind map interaktif**: format tes, strategi menuju 4.0, peta grammar.
 - **Materi lengkap** Reading, Listening, Writing, Speaking — semua tipe soal baru 2026, strategi, jebakan, template, contoh jawaban.
-- **Grammar inti** (12 topik + kuis) dan **kosakata akademik** (flashcard, audio, kuis).
+- **Grammar inti** (12 topik + kuis) dan **150 kosakata** akademik, kampus & sains (flashcard, audio, kuis).
 - **Drill per tipe soal**: Complete the Words, Read in Daily Life, Choose a Response, Build a Sentence, Listen & Repeat.
-- **3 tryout lengkap** dengan audio Text-to-Speech, timer, progres pengisian, pembahasan, dan estimasi band.
+- **Tips & trik** untuk 12 tipe soal (trik cepat, jebakan, latihan harian).
+- **5 tryout lengkap** dengan audio Text-to-Speech, timer, progres pengisian, pembahasan, dan estimasi band.
 - **UX**: mode gelap, pencarian cepat (`Ctrl/⌘ + K`), timer fokus Pomodoro, navigasi bawah di HP, progres tersimpan di `localStorage`.
 
 ## Struktur
@@ -18,7 +19,8 @@ Website belajar mandiri untuk persiapan **TOEFL iBT format baru (mulai 21 Januar
 ```
 index.html      # kerangka aplikasi
 styles.css      # desain (light/dark)
-data.js         # konten: kosakata, grammar, tryout, drill, mind map, rencana
+data.js         # konten inti: kosakata, grammar, tryout 1–3, drill, mind map, rencana
+data-extra.js   # tryout 4–5, kosakata tambahan, tips & trik
 app.js          # logika: router, view, penilaian, palette, timer
 vendor/icons.js # subset ikon Lucide (ISC)
 vercel.json     # konfigurasi deploy Vercel

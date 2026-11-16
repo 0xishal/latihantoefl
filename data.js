@@ -2,9 +2,9 @@
    DATA
    ========================================================= */
 const NAV=[
- ['grp','Mulai'],['beranda','layout-dashboard','Beranda'],['rencana','calendar-check','Rencana 12 Minggu'],['mindmap','network','Mind Map'],['rangkuman','sticky-note','Rangkuman Kilat'],
+ ['grp','Mulai'],['beranda','layout-dashboard','Beranda'],['rencana','calendar-check','Rencana 12 Minggu'],['mindmap','network','Mind Map'],['rangkuman','sticky-note','Rangkuman Kilat'],['tips','lightbulb','Tips & Trik'],
  ['grp','Materi'],['reading','book-open','Reading','R'],['listening','headphones','Listening','L'],['writing','pen-line','Writing','W'],['speaking','mic','Speaking','S'],['grammar','puzzle','Grammar Inti'],['kosakata','languages','Kosakata Akademik'],
- ['grp','Latihan'],['latihan','target','Drill per Tipe Soal'],['tryout','flag','Tryout (3 Paket)'],
+ ['grp','Latihan'],['latihan','target','Drill per Tipe Soal'],['tryout','flag','Tryout (5 Paket)'],
  ['grp','Lainnya'],['sumber','library','Sumber Belajar']
 ];
 const BOTTOM=[['beranda','layout-dashboard','Beranda'],['rencana','calendar-check','Rencana'],['latihan','target','Drill'],['tryout','flag','Tryout'],['menu','menu','Menu']];
@@ -340,17 +340,17 @@ branches:[
 };
 
 const PLAN=[
-{w:1,ph:"Fondasi",t:"Diagnosis & kenali format",tasks:["Pelajari format 2026 lewat halaman Mind Map & Rangkuman","Kerjakan Tryout 1 (diagnostik) dan catat skor tiap section","Grammar: topik 1 (word forms) + kuis","Kosakata nomor 1–20 (flashcard)","Dengarkan podcast/berita bahasa Inggris 15 menit tiap hari","Tentukan tanggal tes & daftar di ets.org"]},
+{w:1,ph:"Fondasi",t:"Diagnosis & kenali format",tasks:["Pelajari format 2026 lewat Mind Map, Rangkuman & Tips & Trik","Kerjakan Tryout 1 (diagnostik) dan catat skor tiap section","Grammar: topik 1 (word forms) + kuis","Kosakata nomor 1–20 (flashcard)","Dengarkan podcast/berita bahasa Inggris 15 menit tiap hari","Tentukan tanggal tes & daftar di ets.org"]},
 {w:2,ph:"Fondasi",t:"Grammar dasar + Complete the Words",tasks:["Grammar: topik 2–3 (agreement & tenses)","Drill Complete the Words (2 paragraf) — tulis ulang kata yang salah eja","Baca 1 artikel pendek/hari, catat 5 kata baru","Shadowing 10 menit/hari (TED-Ed / BBC)","Kosakata nomor 21–40"]},
 {w:3,ph:"Fondasi",t:"Build a Sentence & Choose a Response",tasks:["Grammar: topik 4 (question & indirect question) — paling penting!","Drill Build a Sentence (10 soal) sampai skor ≥ 9/10","Drill Choose a Response (8 soal)","Kosakata nomor 41–60","Tulis 1 email latihan memakai template"]},
 {w:4,ph:"Fondasi",t:"Reading akademik & note-taking",tasks:["Pelajari 6 tipe soal Academic Passage + jebakan","Latih 3 bacaan akademik (Official Guide / TestReady)","Hafalkan simbol note-taking; latih pada 2 kuliah TED-Ed","Grammar: topik 5–8 + kuis Grammar ≥ 80%","Review semua kosakata (mode 'belum hafal')"]},
 {w:5,ph:"Penguatan",t:"Listening & Speaking",tasks:["Dikte 5 menit/hari: tulis persis apa yang didengar","Latihan Listen & Repeat 20 kalimat (rekam diri)","Jawab 8 pertanyaan interview dengan struktur Answer–Reason–Example","Tulis 2 Academic Discussion dengan timer 10 menit","Tambah 15 kata akademik baru/hari dari AWL"]},
 {w:6,ph:"Penguatan",t:"Evaluasi tengah program",tasks:["Kerjakan Tryout 2 dalam satu duduk","Analisis kesalahan → buat error log","Fokuskan 70% waktu minggu ini ke section terlemah","Grammar: topik 9–12","Ulangi Drill dengan skor < 80%"]},
 {w:7,ph:"Penguatan",t:"Writing intensif",tasks:["3 email (7 menit) + 3 diskusi (10 menit) dengan timer","Cek tiap tulisan dengan checklist (agreement, tenses, artikel)","Kumpulkan 20 'golden phrases' untuk email & diskusi","Drill Build a Sentence ulang (target 10/10)","Baca 3 bacaan akademik + rangkum 2 kalimat"]},
-{w:8,ph:"Penguatan",t:"Speaking intensif",tasks:["Jawab 20 pertanyaan interview (rekam, dengar ulang)","Shadowing kalimat panjang (15+ kata) 15 menit/hari","Latih intonasi & stres kata: 'thought groups'","Listening: 2 conversation + 2 academic talk/hari","Review kosakata seluruhnya"]},
+{w:8,ph:"Penguatan",t:"Speaking intensif",tasks:["Jawab 20 pertanyaan interview (rekam, dengar ulang)","Shadowing kalimat panjang (15+ kata) 15 menit/hari","Latih intonasi & stres kata: 'thought groups'","Kerjakan Tryout 4 dan bandingkan dengan Tryout 2","Listening: 2 conversation + 2 academic talk/hari","Review kosakata seluruhnya"]},
 {w:9,ph:"Simulasi",t:"Kecepatan & akurasi",tasks:["Latihan Reading dengan batas waktu ketat","Listening: tebak jenis pertanyaan sebelum audio","Writing: 2 diskusi + 2 email","Speaking: 10 interview acak","Perbarui error log & pelajari polanya"]},
-{w:10,ph:"Simulasi",t:"Tryout akhir",tasks:["Kerjakan Tryout 3 dalam kondisi seperti tes sungguhan","Bandingkan skor Tryout 1–2–3 di Beranda","Perbaiki 3 kelemahan terbesar","Hafalkan ulang template Writing & Speaking"]},
-{w:11,ph:"Simulasi",t:"Latihan resmi ETS",tasks:["Kerjakan practice test resmi ETS (TOEFL TestReady)","Review semua jawaban salah","Simulasi Speaking dengan teman / rekaman","Cek persyaratan tes (ID, lokasi atau Home Edition)"]},
+{w:10,ph:"Simulasi",t:"Tryout akhir",tasks:["Kerjakan Tryout 3 dalam kondisi seperti tes sungguhan","Bandingkan skor semua tryout di Beranda","Perbaiki 3 kelemahan terbesar","Hafalkan ulang template Writing & Speaking"]},
+{w:11,ph:"Simulasi",t:"Latihan resmi ETS",tasks:["Kerjakan Tryout 5 (simulasi final) dalam satu duduk","Kerjakan practice test resmi ETS (TOEFL TestReady)","Review semua jawaban salah","Simulasi Speaking dengan teman / rekaman","Cek persyaratan tes (ID, lokasi atau Home Edition)"]},
 {w:12,ph:"Hari H",t:"Taper & persiapan akhir",tasks:["Ulangi Rangkuman Kilat & Mind Map","Latihan ringan 45 menit/hari, jangan belajar berlebihan","Siapkan ID, rute ke lokasi / perangkat tes rumah","Tidur cukup 2 malam sebelum tes","Hari H: sarapan, datang lebih awal, tenang!"]}
 ];
 
